@@ -1,0 +1,116 @@
+.heading-label {
+  margin: 0.25rem;
+  color: #374151;
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+}
+
+.container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    background: url('../../images/busbg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.form-container {
+    /* border: 3px solid black; */
+    
+    border-radius: 10px;
+    background-color: rgb(196, 196, 196);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    position: absolute;
+    z-index: 2;
+    margin-left: 10vw;
+    padding-left: 1.5rem;
+}
+
+.name {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.contact {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.password {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.form-footer {
+    display: grid;
+    align-items: center;
+    text-align: center;
+}
+
+.submit-btn {
+    width: 90%;
+    margin: 1rem 0rem 0.5rem 0rem;
+    height: 2rem;
+    background-color: rgb(51, 223, 86);
+    font-size: 17px;
+    font-weight: bolder;
+}
+
+.name > div {
+    display: flex;
+    flex-direction: column;
+    margin: 3px;
+}
+
+.contact > div {
+    display: grid;
+    margin: 3px;
+}
+
+.password > div {
+    display: grid;
+    margin: 3px;
+}
+
+.info > div {
+    display: grid;
+    margin: 3px;
+    width: 80%;
+}
+
+.heading {
+    text-align: center;
+}
+
+.form-contents {
+    margin: 0rem 2rem 2rem 2rem;
+}
+
+.dob {
+    display: grid;
+}
+
+input {
+    font-size: 16px;
+    width: 80%;
+    background-color: #ffffff33;
+    backdrop-filter: blur(1px);
+    font-weight: bold;
+}
+
+.option-content {
+    font-size: 16px;
+    background-color: #ffffff33;
+    backdrop-filter: blur(1px);
+}
+
