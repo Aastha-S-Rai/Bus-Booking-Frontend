@@ -1,0 +1,7 @@
+.results {
+    max-height: 10rem;
+    overflow-y: scroll;
+    width: fit-content;
+    padding: 4rem;
+    background-color: rgba(98, 202, 162, 0.859);
+}
