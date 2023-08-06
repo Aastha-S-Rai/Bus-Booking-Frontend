@@ -1,65 +1,43 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import SearchBar from "../../components/search/SearchBar";
-import SearchResults from "../../components/search/SearchResults";
-import "./landing.css";
 import Submit from "../../components/submit";
+import "./landing.css";
 
 export default function LandingPage() {
   const defaultSearchObj = {
     source: "",
     destination: "",
   };
-  const [location, setLocation] = useState(defaultSearchObj);
 
-  const [sourceResult, setSourceResult] = useState([]);
-  const [destinationResult, setDestinationResult] = useState([]);
+  const [locationObj, setLocationObj] = useState(defaultSearchObj);
+  const [locationList, setLocationList] = useState([]);
 
   const handleLocationChange = (key, value) => {
-    let obj = Object.assign({}, location);
+    let obj = Object.assign({}, locationObj);
     obj[key] = value;
-    console.log(key+"===>"+value)
-    setLocation(obj);
+    setLocationObj(obj);
   };
 
-  const handleSourceChange = (e) =>
-    handleLocationChange("source", e.target.value);
-
-  const handleDestinationChange = (e) =>
-    handleLocationChange("destination", e.target.value);
-
   const handleSubmit = async () => {
-    const res = await axios.post("http://localhost:4000", location);
+    const res = await axios.post("http://localhost:4000", locationObj);
     console.log("Aastha => ", res);
-  }
+  };
 
-  const fetchData = async (search_text, search_type) => {
-    if (!search_text) {
-      if (search_type === "source") {
-        setSourceResult([]);
-      }
-      if (search_type === "destination") {
-        setDestinationResult([]);
-      }
-      return;
-    }
-
-    const payload = {
-      name: search_text,
-    };
-
+  const fetchData = async () => {
     await axios
-      .post("http://localhost:4000/stop/search", payload)
+      .get("http://localhost:4000/stop/get-all-bus-stops")
       .then((res) => {
         const response = res;
         if (response?.status === 200) {
           if (response?.data?.res) {
-            if (search_type === "source") {
-              setSourceResult(response?.data?.res);
-            }
-            if (search_type === "destination") {
-              setDestinationResult(response?.data?.res);
-            }
+            const mappedData = response?.data?.res.map((record) => {
+              return {
+                value: record?._id,
+                label: record?.name,
+              };
+            });
+            setLocationList(mappedData);
           }
         }
       })
@@ -68,23 +46,9 @@ export default function LandingPage() {
       });
   };
 
-  const handleSourceLocationSelect = (value) => {
-    handleLocationChange("source", value);
-    setSourceResult([]);
-  };
-
-  const handleDestinationLocationSelect = (value) => {
-    handleLocationChange("destination", value);
-    setDestinationResult([]);
-  };
-
   useEffect(() => {
-    fetchData(location?.source, "source");
-  }, [location?.source]);
-
-  useEffect(() => {
-    fetchData(location?.destination, "destination");
-  }, [location?.destination]);
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -93,35 +57,25 @@ export default function LandingPage() {
       <div className="searchContent">
         <div className="searchSource">
           <SearchBar
+            type="source"
+            options={locationList}
+            currentValue={locationObj?.source}
+            handleChange={handleLocationChange}
             placeHolder={`Enter Source Location`}
-            handleChange={handleSourceChange}
-            currentValue={location?.source}
           />
-          <div className="result">
-            <SearchResults
-              results={sourceResult}
-              onOptionSelect={handleSourceLocationSelect}
-            />
-          </div>
         </div>
         <div className="searchSource">
           <SearchBar
+            type="destination"
+            options={locationList}
+            currentValue={locationObj?.destination}
+            handleChange={handleLocationChange}
             placeHolder={`Enter Destination Location`}
-            handleChange={handleDestinationChange}
-            currentValue={location?.destination}
           />
-          <div className="result">
-            <SearchResults
-              results={destinationResult}
-              onOptionSelect={handleDestinationLocationSelect}
-            />
-          </div>
         </div>
-        <div
-          className="submit"
-          onClick={handleSubmit}
-        >
-          <Submit text="Search" ></Submit>
+
+        <div className="submit" onClick={handleSubmit}>
+          <Submit text="Search"></Submit>
         </div>
       </div>
     </>

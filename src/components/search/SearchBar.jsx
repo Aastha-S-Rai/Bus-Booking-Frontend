@@ -1,21 +1,27 @@
 import React from "react";
-import { FormGroup, Input } from "reactstrap";
+import Select from "react-select";
 import "./styles.css";
 
 export const SearchBar = (props) => {
-  const { placeHolder = "Search ...", handleChange, currentValue = "" } = props;
+  const {
+    type = "source",
+    options = [],
+    currentValue = "",
+    handleChange,
+    placeHolder = "Search Location",
+  } = props;
 
   return (
     <>
-      <FormGroup>
-        <Input
-          id="search"
-          type="text"
-          placeholder={placeHolder}
-          value={currentValue}
-          onChange={handleChange}
-        />
-      </FormGroup>
+      <Select
+        key={type}
+        defaultValue={currentValue}
+        onChange={(e) => {
+          handleChange(type, e.value);
+        }}
+        options={options}
+        placeholder={placeHolder}
+      />
     </>
   );
 };
