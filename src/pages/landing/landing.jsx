@@ -64,7 +64,7 @@ export default function LandingPage() {
             placeHolder={`Enter Source Location`}
           />
         </div>
-        <div className="searchSource">
+        <div className="searchSource" style={{ marginLeft: "1rem" }}>
           <SearchBar
             type="destination"
             options={locationList}
@@ -74,7 +74,11 @@ export default function LandingPage() {
           />
         </div>
 
-        <div className="submit" onClick={handleSubmit}>
+        <div
+          className="submit"
+          onClick={handleSubmit}
+          style={{ marginLeft: "1rem" }}
+        >
           <Submit text="Search"></Submit>
         </div>
       </div>
